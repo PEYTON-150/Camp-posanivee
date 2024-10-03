@@ -1,0 +1,283 @@
+﻿package Camp_Posanivee;
+import java.io.*;
+import java.util.Scanner;
+
+
+/** @author nic reilly and nick christ
+ * 
+ * 
+ *
+ */
+public class Maincamp {
+
+
+        public static void main(String[] args) throws IOException {
+                boolean camp= true;
+                String dodat ;
+                String n,age,d;
+                String name;
+        BST a = new BST();
+                Scanner scan = new Scanner(System.in);
+            String filename;
+            System.out.println("---Welcome to Camp you will be itchy---\n");
+            System.out.print("Please enter the name of your file: ");
+            filename = scan.nextLine();
+            Scanner reader = new Scanner(new FileReader(filename));    
+            while(camp==true)
+            {
+            dodat = reader.next();
+           
+            if(dodat.equals("E")||dodat.equals("e"))
+            {
+                    n=reader.next();
+            age=reader.next();
+            d=reader.next();
+            camperclass c;
+            System.out.println("Command: "+dodat+" "+n+" "+age+" "+d);
+           System.out.println("New Camper added");
+
+
+            int ag = Integer.parseInt(age);
+                     c = new camperclass(n,ag,d);
+                     a.insert(c);
+                    
+            }
+            
+            if(dodat.equals("Q")||dodat.equals("q"))
+            {System.out.println("Command: "+dodat);
+                    camp = false;
+            
+            }
+            
+            if(dodat.equals("d")||dodat.equals("D"))
+            {name=reader.next();    
+            System.out.println("Command: "+dodat+" "+name);
+            camperclass f=new camperclass(name,0,"");
+            camperclass found=(camperclass) a.lookup(f);
+            System.out.println(found.getname()+" is "+found.getage()+" years old");
+            System.out.println("Diet: "+found.getdiet());
+            }
+            
+            
+           
+            
+            if(dodat.equals("l")||dodat.equals("L"))
+            { System.out.println("Command: "+dodat);
+            a.reset(0);
+                System.out.println("Campers in Alphabetical order");
+                
+                
+                while(a.hasNext())
+                {
+                camperclass tempc =(camperclass) a.getNext();
+                        System.out.println(tempc.getname());
+                }
+            }
+            
+            if(dodat.equals("p")||dodat.equals("P"))
+            { System.out.println("Command: "+dodat);
+            a.reset(BST.PREORDER);
+                System.out.println("Campers in pre-order");
+                
+                
+                while(a.hasNext())
+                {
+                camperclass tempc =(camperclass) a.getNext();
+                        System.out.println(tempc.getname());
+                }
+            }
+            
+            if(dodat.equals("a")||dodat.equals("A"))
+            { System.out.println("Command: "+dodat);
+                    a.reset(BST.PREORDER);
+                double tot =0.0;
+                int count=0;
+                while(a.hasNext())
+                {
+                camperclass tempc =(camperclass) a.getNext();
+                        tot=tempc.getage()+tot;
+                        
+                        count++;
+                        }
+                
+                
+                if(tot==0)
+                {
+                        System.out.println("no campers in camp");
+                }
+                if(tot!=0)
+                {
+                        tot=tot/count;
+                System.out.println("the average age of the campers is "+tot);
+            }
+            }
+            if(dodat.equals("v")||dodat.equals("V"))
+            {System.out.println("Command: "+dodat);
+                    a.reset(BST.PREORDER);
+                    int count=0;
+                    while(a.hasNext())
+                    {
+                    camperclass tempc =(camperclass) a.getNext();
+                            
+                            if(tempc.getdiet().equals("V"))
+                            {
+                            count++;
+                            }
+                            }
+                    System.out.println("there are "+count+" Vegans");
+            }
+            
+            if(dodat.equals("W")||dodat.equals("w"))
+            {n=reader.next();
+            System.out.println("Command: "+dodat+" "+n);
+            camperclass f=new camperclass(n,0,"");
+            camperclass found=(camperclass) a.lookup(f);
+            a.delete(found);
+           System.out.println("camper withdrew");
+            }
+            
+            if(dodat.equals("H")||dodat.equals("h"))
+            {System.out.println("Command: "+dodat);
+                    System.out.println("E is Enroll a new camper ");
+                    System.out.println("H is help");
+                    System.out.println("W is Withdraw a camper");
+                    System.out.println("D is Display the age and diet of a camper");
+                    System.out.println("A Prints the average age of the campers ");
+                    System.out.println("L List all campers names in alphabetical order");
+                    System.out.println("V Print the number of vegan campers");
+                    System.out.println("P List all campers names in preorder");
+                    System.out.println("Q is quit");
+            }
+            }
+        }
+
+
+public static void enroll(String n, String z, String d)
+{camperclass c;
+BST a= new BST();
+
+
+int ag = Integer.parseInt(z);
+         c = new camperclass(n,ag,d);
+         a.insert(c);
+         
+        
+         
+}
+public static void unenroll(String name)
+{camperclass c;
+BST a= new BST();
+camperclass f=new camperclass(name,0,"");
+camperclass found=(camperclass) a.delete(f);
+if(found!=null)
+  System.out.println("oh well");
+        
+}
+
+
+
+
+
+
+
+
+public static void Dige(String name)
+{
+BST a= new BST();
+camperclass f=new camperclass(name,0,"");
+camperclass found=(camperclass) a.lookup(f);
+System.out.println(found.getname()+" is "+found.getage()+" years old");
+System.out.println("Diet: "+found.getdiet());
+if(found!=null)
+  System.out.println("oh well");
+}
+
+
+        
+public static void aList()
+{BST Bob = new BST();
+Bob.reset(BST.INORDER);
+        System.out.println("Campers in Alphabetical order");
+        
+        
+        //while(Bob.hasNext())
+        camperclass tempc =(camperclass) Bob.getNext();
+        System.out.println(tempc );
+                System.out.println(tempc.getname());
+                
+                
+        
+}
+        
+        
+        
+        
+}
+
+
+
+
+
+
+New class
+
+
+
+
+
+
+
+
+
+
+package Camp_Posanivee;
+import java.io.*;
+public class camperclass implements Comparable <camperclass>{
+String name;
+int age;
+String diet;
+
+
+public camperclass(String n, int a,String d)
+{
+        name=n;
+        age=a;
+        diet=d;
+        
+}
+public int compareTo(camperclass x)
+{
+        
+        
+                
+                // by name
+                //return name.compareTo(f.getName());
+                // by name
+                return (this.name.compareTo(x.getname()));
+                        
+        
+         // to make the compiler happy
+}
+String getname()
+{
+        return name;
+}
+
+
+int getage()
+{
+        return age;
+        
+        
+}
+String getdiet()
+{
+        return diet;
+}
+
+
+
+
+
+
+}
